@@ -1,4 +1,4 @@
-import 'package:calendar_date_picker_alex/calendar_date_picker2.dart';
+import 'package:calendar_date_picker_alex/calendar_date_picker_alex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,8 +9,8 @@ void main() {
     const emp = <DateTime>[];
     await widgetTester.pumpWidget(MaterialApp(
       home: Scaffold(
-        body: CalendarDatePicker2(
-            value: emp, config: CalendarDatePicker2Config()),
+        body: CalendarDatePickerAlex(
+            value: emp, config: CalendarDatePickerAlexConfig()),
       ),
     ));
   });

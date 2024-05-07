@@ -1,4 +1,4 @@
-part of '../calendar_date_picker2.dart';
+part of '../calendar_date_picker_alex.dart';
 
 T? _ambiguate<T>(T? value) => value;
 
@@ -14,7 +14,7 @@ class _CalendarView extends StatefulWidget {
   }) : super(key: key);
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePickerAlexConfig config;
 
   /// The initial month to display.
   final DateTime initialMonth;

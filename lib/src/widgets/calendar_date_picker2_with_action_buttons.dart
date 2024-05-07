@@ -1,8 +1,8 @@
-import 'package:calendar_date_picker_alex/calendar_date_picker2.dart';
+import 'package:calendar_date_picker_alex/calendar_date_picker_alex.dart';
 import 'package:flutter/material.dart';
 
-class CalendarDatePicker2WithActionButtons extends StatefulWidget {
-  const CalendarDatePicker2WithActionButtons({
+class CalendarDatePickerAlexWithActionButtons extends StatefulWidget {
+  const CalendarDatePickerAlexWithActionButtons({
     required this.value,
     required this.config,
     this.onValueChanged,
@@ -21,7 +21,7 @@ class CalendarDatePicker2WithActionButtons extends StatefulWidget {
   final ValueChanged<DateTime>? onDisplayedMonthChanged;
 
   /// The calendar configurations including action buttons
-  final CalendarDatePicker2WithActionButtonsConfig config;
+  final CalendarDatePickerAlexWithActionButtonsConfig config;
 
   /// The callback when cancel button is tapped
   final Function? onCancelTapped;
@@ -30,12 +30,12 @@ class CalendarDatePicker2WithActionButtons extends StatefulWidget {
   final Function? onOkTapped;
 
   @override
-  State<CalendarDatePicker2WithActionButtons> createState() =>
-      _CalendarDatePicker2WithActionButtonsState();
+  State<CalendarDatePickerAlexWithActionButtons> createState() =>
+      _CalendarDatePickerAlexWithActionButtonsState();
 }
 
-class _CalendarDatePicker2WithActionButtonsState
-    extends State<CalendarDatePicker2WithActionButtons> {
+class _CalendarDatePickerAlexWithActionButtonsState
+    extends State<CalendarDatePickerAlexWithActionButtons> {
   List<DateTime?> _values = [];
   List<DateTime?> _editCache = [];
 
@@ -48,7 +48,7 @@ class _CalendarDatePicker2WithActionButtonsState
 
   @override
   void didUpdateWidget(
-      covariant CalendarDatePicker2WithActionButtons oldWidget) {
+      covariant CalendarDatePickerAlexWithActionButtons oldWidget) {
     var isValueSame = oldWidget.value.length == widget.value.length;
 
     if (isValueSame) {
@@ -79,7 +79,7 @@ class _CalendarDatePicker2WithActionButtonsState
       children: [
         MediaQuery.removePadding(
           context: context,
-          child: CalendarDatePicker2(
+          child: CalendarDatePickerAlex(
             value: [..._editCache],
             config: widget.config,
             onValueChanged: (values) => _editCache = values,

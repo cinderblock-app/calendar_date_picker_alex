@@ -1,4 +1,4 @@
-part of '../calendar_date_picker2.dart';
+part of '../calendar_date_picker_alex.dart';
 
 /// Displays the days of a given month and allows choosing a day.
 ///
@@ -15,7 +15,7 @@ class _DayPicker extends StatefulWidget {
   }) : super(key: key);
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePickerAlexConfig config;
 
   /// The currently selected dates.
   ///
@@ -201,7 +201,7 @@ class _DayPickerState extends State<_DayPicker> {
         }
 
         final isFullySelectedRangePicker =
-            widget.config.calendarType == CalendarDatePicker2Type.range &&
+            widget.config.calendarType == CalendarDatePickerAlexType.range &&
                 widget.selectedDates.length == 2;
         var isDateInBetweenRangePickerSelectedDates = false;
 

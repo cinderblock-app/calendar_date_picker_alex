@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-enum CalendarDatePicker2Type {
+enum CalendarDatePickerAlexType {
   single,
   multi,
 
   /// Allows selecting a range of two dates.
   ///
-  /// See also [CalendarDatePicker2Config.rangeBidirectional].
+  /// See also [CalendarDatePickerAlexConfig.rangeBidirectional].
   range,
 }
 
 /// Custom enum for a date picker mode including day, month, and year.
-enum CalendarDatePicker2Mode {
+enum CalendarDatePickerAlexMode {
   /// Choosing a day.
   day,
 
@@ -63,13 +63,13 @@ typedef CalendarSelectableYearPredicate = bool Function(int year);
 
 typedef CalendarSelectableMonthPredicate = bool Function(int year, int month);
 
-class CalendarDatePicker2Config {
-  CalendarDatePicker2Config({
-    CalendarDatePicker2Type? calendarType,
+class CalendarDatePickerAlexConfig {
+  CalendarDatePickerAlexConfig({
+    CalendarDatePickerAlexType? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
-    CalendarDatePicker2Mode? calendarViewMode,
+    CalendarDatePickerAlexMode? calendarViewMode,
     this.weekdayLabels,
     this.weekdayLabelTextStyle,
     this.firstDayOfWeek,
@@ -108,15 +108,15 @@ class CalendarDatePicker2Config {
     this.allowSameValueSelection,
     this.disableMonthPicker,
     this.useAbbrLabelForMonthModePicker,
-  })  : calendarType = calendarType ?? CalendarDatePicker2Type.single,
+  })  : calendarType = calendarType ?? CalendarDatePickerAlexType.single,
         firstDate = DateUtils.dateOnly(firstDate ?? DateTime(1970)),
         lastDate =
             DateUtils.dateOnly(lastDate ?? DateTime(DateTime.now().year + 50)),
         currentDate = currentDate ?? DateUtils.dateOnly(DateTime.now()),
-        calendarViewMode = calendarViewMode ?? CalendarDatePicker2Mode.day;
+        calendarViewMode = calendarViewMode ?? CalendarDatePickerAlexMode.day;
 
   /// The enabled date picker mode
-  final CalendarDatePicker2Type calendarType;
+  final CalendarDatePickerAlexType calendarType;
 
   /// The earliest allowable [DateTime] that the user can select.
   final DateTime firstDate;
@@ -128,7 +128,7 @@ class CalendarDatePicker2Config {
   final DateTime currentDate;
 
   /// The initially displayed view of the calendar picker.
-  final CalendarDatePicker2Mode calendarViewMode;
+  final CalendarDatePickerAlexMode calendarViewMode;
 
   /// Custom weekday labels for the current locale, MUST starts from Sunday
   /// Examples:
@@ -169,7 +169,7 @@ class CalendarDatePicker2Config {
   final Color? selectedDayHighlightColor;
 
   /// The highlight color for day(s) included in the selected range
-  /// Only applicable when [calendarType] is [CalendarDatePicker2Type.range]
+  /// Only applicable when [calendarType] is [CalendarDatePickerAlexType.range]
   final Color? selectedRangeHighlightColor;
 
   /// Custom text style for disabled calendar day(s)
@@ -233,7 +233,7 @@ class CalendarDatePicker2Config {
   final CalendarModePickerTextHandler? modePickerTextHandler;
 
   /// Whether the range selection can be also made in reverse-chronological order.
-  /// Only applicable when [calendarType] is [CalendarDatePicker2Type.range].
+  /// Only applicable when [calendarType] is [CalendarDatePickerAlexType.range].
   final bool? rangeBidirectional;
 
   /// The scroll physics for the calendar month view
@@ -251,12 +251,12 @@ class CalendarDatePicker2Config {
   /// Use Abbreviation label for month mode picker, only works when month picker is enabled
   final bool? useAbbrLabelForMonthModePicker;
 
-  CalendarDatePicker2Config copyWith({
-    CalendarDatePicker2Type? calendarType,
+  CalendarDatePickerAlexConfig copyWith({
+    CalendarDatePickerAlexType? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
-    CalendarDatePicker2Mode? calendarViewMode,
+    CalendarDatePickerAlexMode? calendarViewMode,
     List<String>? weekdayLabels,
     TextStyle? weekdayLabelTextStyle,
     int? firstDayOfWeek,
@@ -296,7 +296,7 @@ class CalendarDatePicker2Config {
     bool? disableMonthPicker,
     bool? useAbbrLabelForMonthModePicker,
   }) {
-    return CalendarDatePicker2Config(
+    return CalendarDatePickerAlexConfig(
       calendarType: calendarType ?? this.calendarType,
       firstDate: DateUtils.dateOnly(firstDate ?? this.firstDate),
       lastDate: DateUtils.dateOnly(lastDate ?? this.lastDate),
@@ -358,14 +358,14 @@ class CalendarDatePicker2Config {
   }
 }
 
-class CalendarDatePicker2WithActionButtonsConfig
-    extends CalendarDatePicker2Config {
-  CalendarDatePicker2WithActionButtonsConfig({
-    CalendarDatePicker2Type? calendarType,
+class CalendarDatePickerAlexWithActionButtonsConfig
+    extends CalendarDatePickerAlexConfig {
+  CalendarDatePickerAlexWithActionButtonsConfig({
+    CalendarDatePickerAlexType? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
-    CalendarDatePicker2Mode? calendarViewMode,
+    CalendarDatePickerAlexMode? calendarViewMode,
     List<String>? weekdayLabels,
     TextStyle? weekdayLabelTextStyle,
     int? firstDayOfWeek,
@@ -487,12 +487,12 @@ class CalendarDatePicker2WithActionButtonsConfig
   final EdgeInsets? buttonPadding;
 
   @override
-  CalendarDatePicker2WithActionButtonsConfig copyWith({
-    CalendarDatePicker2Type? calendarType,
+  CalendarDatePickerAlexWithActionButtonsConfig copyWith({
+    CalendarDatePickerAlexType? calendarType,
     DateTime? firstDate,
     DateTime? lastDate,
     DateTime? currentDate,
-    CalendarDatePicker2Mode? calendarViewMode,
+    CalendarDatePickerAlexMode? calendarViewMode,
     List<String>? weekdayLabels,
     TextStyle? weekdayLabelTextStyle,
     int? firstDayOfWeek,
@@ -541,7 +541,7 @@ class CalendarDatePicker2WithActionButtonsConfig
     bool? disableMonthPicker,
     bool? useAbbrLabelForMonthModePicker,
   }) {
-    return CalendarDatePicker2WithActionButtonsConfig(
+    return CalendarDatePickerAlexWithActionButtonsConfig(
       calendarType: calendarType ?? this.calendarType,
       firstDate: DateUtils.dateOnly(firstDate ?? this.firstDate),
       lastDate: DateUtils.dateOnly(lastDate ?? this.lastDate),

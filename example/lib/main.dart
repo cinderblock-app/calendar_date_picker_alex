@@ -1,4 +1,4 @@
-import 'package:calendar_date_picker_alex/calendar_date_picker2.dart';
+import 'package:calendar_date_picker_alex/calendar_date_picker_alex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CalendarDatePicker2 Demo',
+      title: 'CalendarDatePickerAlex Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         Locale('ko', ''),
         Locale('hi', ''),
       ],
-      home: const MyHomePage(title: 'CalendarDatePicker2 Demo'),
+      home: const MyHomePage(title: 'CalendarDatePickerAlex Demo'),
     );
   }
 }
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String _getValueText(
-    CalendarDatePicker2Type datePickerType,
+    CalendarDatePickerAlexType datePickerType,
     List<DateTime?> values,
   ) {
     values =
@@ -98,13 +98,13 @@ class _MyHomePageState extends State<MyHomePage> {
         .toString()
         .replaceAll('00:00:00.000', '');
 
-    if (datePickerType == CalendarDatePicker2Type.multi) {
+    if (datePickerType == CalendarDatePickerAlexType.multi) {
       valueText = values.isNotEmpty
           ? values
               .map((v) => v.toString().replaceAll('00:00:00.000', ''))
               .join(', ')
           : 'null';
-    } else if (datePickerType == CalendarDatePicker2Type.range) {
+    } else if (datePickerType == CalendarDatePickerAlexType.range) {
       if (values.isNotEmpty) {
         final startDate = values[0].toString().replaceAll('00:00:00.000', '');
         final endDate = values.length > 1
@@ -129,10 +129,10 @@ class _MyHomePageState extends State<MyHomePage> {
       fontWeight: FontWeight.w700,
       decoration: TextDecoration.underline,
     );
-    final config = CalendarDatePicker2WithActionButtonsConfig(
+    final config = CalendarDatePickerAlexWithActionButtonsConfig(
       calendarViewScrollPhysics: const NeverScrollableScrollPhysics(),
       dayTextStyle: dayTextStyle,
-      calendarType: CalendarDatePicker2Type.range,
+      calendarType: CalendarDatePickerAlexType.range,
       selectedDayHighlightColor: Colors.purple[800],
       closeDialogOnCancelTapped: true,
       firstDayOfWeek: 1,
@@ -247,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           ElevatedButton(
             onPressed: () async {
-              final values = await showCalendarDatePicker2Dialog(
+              final values = await showCalendarDatePickerAlexDialog(
                 context: context,
                 config: config,
                 dialogSize: const Size(325, 400),
@@ -274,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildDefaultSingleDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
+    final config = CalendarDatePickerAlexConfig(
       selectedDayHighlightColor: Colors.amber[900],
       weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       weekdayLabelTextStyle: const TextStyle(
@@ -310,7 +310,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Single Date Picker (With default value)'),
-        CalendarDatePicker2(
+        CalendarDatePickerAlex(
           config: config,
           value: _singleDatePickerValueWithDefaultValue,
           onValueChanged: (dates) =>
@@ -336,7 +336,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildCustomSingleDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
+    final config = CalendarDatePickerAlexConfig(
       selectedDayHighlightColor: const Color(0xff1570EF),
       weekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       weekdayLabelTextStyle: const TextStyle(
@@ -410,7 +410,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CalendarDatePicker2(
+        CalendarDatePickerAlex(
           config: config,
           value: _singleDatePickerValueWithDefaultValue,
           onValueChanged: (dates) =>
@@ -436,9 +436,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildDefaultMultiDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
+    final config = CalendarDatePickerAlexConfig(
       disableMonthPicker: true,
-      calendarType: CalendarDatePicker2Type.multi,
+      calendarType: CalendarDatePickerAlexType.multi,
       selectedDayHighlightColor: Colors.indigo,
     );
     return Column(
@@ -446,7 +446,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Multi Date Picker (With default value)'),
-        CalendarDatePicker2(
+        CalendarDatePickerAlex(
           config: config,
           value: _multiDatePickerValueWithDefaultValue,
           onValueChanged: (dates) =>
@@ -474,8 +474,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildDefaultRangeDatePickerWithValue() {
-    final config = CalendarDatePicker2Config(
-      calendarType: CalendarDatePicker2Type.range,
+    final config = CalendarDatePickerAlexConfig(
+      calendarType: CalendarDatePickerAlexType.range,
       selectedDayHighlightColor: Colors.teal[800],
       weekdayLabelTextStyle: const TextStyle(
         color: Colors.black87,
@@ -492,7 +492,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Range Date Picker (With default value)'),
-        CalendarDatePicker2(
+        CalendarDatePickerAlex(
           config: config,
           value: _rangeDatePickerValueWithDefaultValue,
           onValueChanged: (dates) =>
@@ -518,8 +518,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildCalendarWithActionButtons() {
-    final config = CalendarDatePicker2WithActionButtonsConfig(
-      calendarType: CalendarDatePicker2Type.range,
+    final config = CalendarDatePickerAlexWithActionButtonsConfig(
+      calendarType: CalendarDatePickerAlexType.range,
       disableModePicker: true,
     );
     return Column(
@@ -527,7 +527,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Date Picker With Action Buttons'),
-        CalendarDatePicker2WithActionButtons(
+        CalendarDatePickerAlexWithActionButtons(
           config: config,
           value: _rangeDatePickerWithActionButtonsWithValue,
           onValueChanged: (dates) => setState(

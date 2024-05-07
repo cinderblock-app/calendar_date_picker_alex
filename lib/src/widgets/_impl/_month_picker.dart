@@ -1,12 +1,12 @@
-part of '../calendar_date_picker2.dart';
+part of '../calendar_date_picker_alex.dart';
 
 /// A scrollable grid of months to allow picking a month.
 ///
-/// The month picker widget is rarely used directly. Instead, consider using [CalendarDatePicker2]
+/// The month picker widget is rarely used directly. Instead, consider using [CalendarDatePickerAlex]
 ///
 /// See also:
 ///
-///  * [CalendarDatePicker2], which provides a Material Design date picker
+///  * [CalendarDatePickerAlex], which provides a Material Design date picker
 ///    interface.
 ///
 ///
@@ -21,7 +21,7 @@ class _MonthPicker extends StatefulWidget {
   }) : super(key: key);
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePickerAlexConfig config;
 
   /// The currently selected dates.
   ///

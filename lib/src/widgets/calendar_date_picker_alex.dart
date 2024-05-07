@@ -4,7 +4,7 @@
 
 import 'dart:math' as math;
 
-import 'package:calendar_date_picker_alex/calendar_date_picker2.dart';
+import 'package:calendar_date_picker_alex/calendar_date_picker_alex.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -39,8 +39,8 @@ const double _monthPickerRowSpacing = 8.0;
 const double _subHeaderHeight = 52.0;
 const double _monthNavButtonsWidth = 108.0;
 
-class CalendarDatePicker2 extends StatefulWidget {
-  CalendarDatePicker2({
+class CalendarDatePickerAlex extends StatefulWidget {
+  CalendarDatePickerAlex({
     required this.config,
     required this.value,
     this.onValueChanged,
@@ -51,12 +51,12 @@ class CalendarDatePicker2 extends StatefulWidget {
     const valid = true;
     const invalid = false;
 
-    if (config.calendarType == CalendarDatePicker2Type.single) {
+    if (config.calendarType == CalendarDatePickerAlexType.single) {
       assert(value.length < 2,
           'Error: single date picker only allows maximum one initial date');
     }
 
-    if (config.calendarType == CalendarDatePicker2Type.range &&
+    if (config.calendarType == CalendarDatePickerAlexType.range &&
         value.length > 1) {
       final isRangePickerValueValid = value[0] == null
           ? (value[1] != null ? invalid : valid)
@@ -72,7 +72,7 @@ class CalendarDatePicker2 extends StatefulWidget {
   }
 
   /// The calendar UI related configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePickerAlexConfig config;
 
   /// The selected [DateTime]s that the picker should display.
   final List<DateTime?> value;
@@ -87,13 +87,13 @@ class CalendarDatePicker2 extends StatefulWidget {
   final ValueChanged<DateTime>? onDisplayedMonthChanged;
 
   @override
-  State<CalendarDatePicker2> createState() => _CalendarDatePicker2State();
+  State<CalendarDatePickerAlex> createState() => _CalendarDatePickerAlexState();
 }
 
-class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
+class _CalendarDatePickerAlexState extends State<CalendarDatePickerAlex> {
   bool _announcedInitialDate = false;
   late List<DateTime?> _selectedDates;
-  late CalendarDatePicker2Mode _mode;
+  late CalendarDatePickerAlexMode _mode;
   late DateTime _currentDisplayedMonthDate;
   final GlobalKey _dayPickerKey = GlobalKey();
   final GlobalKey _monthPickerKey = GlobalKey();
@@ -115,7 +115,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
   }
 
   @override
-  void didUpdateWidget(CalendarDatePicker2 oldWidget) {
+  void didUpdateWidget(CalendarDatePickerAlex oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.config.calendarViewMode != oldWidget.config.calendarViewMode) {
       _mode = widget.config.calendarViewMode;
@@ -167,7 +167,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
   }
 
   // Commented because not used atm
-  // void _handleModeChanged(CalendarDatePicker2Mode mode) {
+  // void _handleModeChanged(CalendarDatePickerAlexMode mode) {
   //   _vibrate();
   //   setState(() {
   //     _mode = mode;
@@ -175,9 +175,9 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
   //       for (final date in _selectedDates) {
   //         if (date != null) {
   //           SemanticsService.announce(
-  //             _mode == CalendarDatePicker2Mode.day
+  //             _mode == CalendarDatePickerAlexMode.day
   //                 ? _localizations.formatMonthYear(date)
-  //                 : _mode == CalendarDatePicker2Mode.month
+  //                 : _mode == CalendarDatePickerAlexMode.month
   //                     ? _localizations.formatMonthYear(date)
   //                     : _localizations.formatYear(date),
   //             _textDirection,
@@ -230,7 +230,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
   void _handleMonthChanged(DateTime value) {
     _vibrate();
     setState(() {
-      _mode = CalendarDatePicker2Mode.day;
+      _mode = CalendarDatePickerAlexMode.day;
       _handleDisplayedMonthDateChanged(value);
     });
   }
@@ -245,7 +245,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
     }
 
     setState(() {
-      _mode = CalendarDatePicker2Mode.day;
+      _mode = CalendarDatePickerAlexMode.day;
       _handleDisplayedMonthDateChanged(value, fromYearPicker: true);
     });
   }
@@ -258,11 +258,11 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
 
       final calendarType = widget.config.calendarType;
       switch (calendarType) {
-        case CalendarDatePicker2Type.single:
+        case CalendarDatePickerAlexType.single:
           selectedDates = [value];
           break;
 
-        case CalendarDatePicker2Type.multi:
+        case CalendarDatePickerAlexType.multi:
           final index =
               selectedDates.indexWhere((d) => DateUtils.isSameDay(d, value));
           if (index != -1) {
@@ -272,7 +272,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
           }
           break;
 
-        case CalendarDatePicker2Type.range:
+        case CalendarDatePickerAlexType.range:
           if (selectedDates.isEmpty) {
             selectedDates.add(value);
             break;
@@ -300,7 +300,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
         ..sort((d1, d2) => d1!.compareTo(d2!));
 
       final isValueDifferent =
-          widget.config.calendarType != CalendarDatePicker2Type.single ||
+          widget.config.calendarType != CalendarDatePickerAlexType.single ||
               !DateUtils.isSameDay(selectedDates[0],
                   _selectedDates.isNotEmpty ? _selectedDates[0] : null);
       if (isValueDifferent || widget.config.allowSameValueSelection == true) {
@@ -312,7 +312,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
 
   Widget _buildPicker() {
     switch (_mode) {
-      case CalendarDatePicker2Mode.day:
+      case CalendarDatePickerAlexMode.day:
         return _CalendarView(
           config: widget.config,
           key: _dayPickerKey,
@@ -321,7 +321,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
           onChanged: _handleDayChanged,
           onDisplayedMonthChanged: _handleDisplayedMonthDateChanged,
         );
-      case CalendarDatePicker2Mode.month:
+      case CalendarDatePickerAlexMode.month:
         return Padding(
           padding: EdgeInsets.only(
               top: widget.config.controlsHeight ?? _subHeaderHeight),
@@ -333,7 +333,7 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
             onChanged: _handleMonthChanged,
           ),
         );
-      case CalendarDatePicker2Mode.year:
+      case CalendarDatePickerAlexMode.year:
         return Padding(
           padding: EdgeInsets.only(
               top: widget.config.controlsHeight ?? _subHeaderHeight),

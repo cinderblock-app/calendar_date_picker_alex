@@ -1,9 +1,9 @@
-part of '../calendar_date_picker2.dart';
+part of '../calendar_date_picker_alex.dart';
 
-/// A button that used to toggle the [CalendarDatePicker2Mode] for a date picker.
+/// A button that used to toggle the [CalendarDatePickerAlexMode] for a date picker.
 ///
 /// This appears above the calendar grid and allows the user to toggle the
-/// [CalendarDatePicker2Mode] to display either the calendar view or the year list.
+/// [CalendarDatePickerAlexMode] to display either the calendar view or the year list.
 class _DatePickerModeToggleButton extends StatefulWidget {
   const _DatePickerModeToggleButton({
     required this.mode,
@@ -14,7 +14,7 @@ class _DatePickerModeToggleButton extends StatefulWidget {
   });
 
   /// The current display of the calendar picker.
-  final CalendarDatePicker2Mode mode;
+  final CalendarDatePickerAlexMode mode;
 
   /// The current selected month.
   final DateTime monthDate;
@@ -26,7 +26,7 @@ class _DatePickerModeToggleButton extends StatefulWidget {
   final VoidCallback onYearPressed;
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePickerAlexConfig config;
 
   @override
   _DatePickerModeToggleButtonState createState() =>
@@ -43,8 +43,8 @@ class _DatePickerModeToggleButtonState
   @override
   void initState() {
     super.initState();
-    final isMonthOrYearMode = widget.mode == CalendarDatePicker2Mode.year ||
-        widget.mode == CalendarDatePicker2Mode.month;
+    final isMonthOrYearMode = widget.mode == CalendarDatePickerAlexMode.year ||
+        widget.mode == CalendarDatePickerAlexMode.month;
     _monthController = AnimationController(
       value: isMonthOrYearMode ? 0.5 : 0,
       upperBound: 0.5,
@@ -74,17 +74,17 @@ class _DatePickerModeToggleButtonState
       return;
     }
 
-    if (widget.mode == CalendarDatePicker2Mode.month) {
+    if (widget.mode == CalendarDatePickerAlexMode.month) {
       _monthController.forward();
       _yearController.reverse();
     }
 
-    if (widget.mode == CalendarDatePicker2Mode.year) {
+    if (widget.mode == CalendarDatePickerAlexMode.year) {
       _yearController.forward();
       _monthController.reverse();
     }
 
-    if (widget.mode == CalendarDatePicker2Mode.day) {
+    if (widget.mode == CalendarDatePickerAlexMode.day) {
       _yearController.reverse();
       _monthController.reverse();
     }
@@ -111,12 +111,12 @@ class _DatePickerModeToggleButtonState
       height: (widget.config.controlsHeight ?? _subHeaderHeight),
       child: Row(
         children: <Widget>[
-          if (widget.mode == CalendarDatePicker2Mode.day &&
+          if (widget.mode == CalendarDatePickerAlexMode.day &&
               widget.config.centerAlignModePicker == true)
             // Give space for the prev/next month buttons that are underneath this row
             SizedBox(width: datePickerOffsetPadding),
           ..._buildModePickerButtons(),
-          if (widget.mode == CalendarDatePicker2Mode.day)
+          if (widget.mode == CalendarDatePickerAlexMode.day)
             // Give space for the prev/next month buttons that are underneath this row
             SizedBox(width: datePickerOffsetPadding),
         ],

@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:calendar_date_picker_alex/calendar_date_picker2.dart';
+import 'package:calendar_date_picker_alex/calendar_date_picker_alex.dart';
 import 'package:flutter/material.dart';
 
-Future<List<DateTime?>?> showCalendarDatePicker2Dialog({
+Future<List<DateTime?>?> showCalendarDatePickerAlexDialog({
   required BuildContext context,
-  required CalendarDatePicker2WithActionButtonsConfig config,
+  required CalendarDatePickerAlexWithActionButtonsConfig config,
   required Size dialogSize,
   List<DateTime?> value = const [],
   BorderRadius? borderRadius,
@@ -31,7 +31,7 @@ Future<List<DateTime?>?> showCalendarDatePicker2Dialog({
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CalendarDatePicker2WithActionButtons(
+          CalendarDatePickerAlexWithActionButtons(
             value: value,
             config: config.copyWith(openedFromDialog: true),
           ),

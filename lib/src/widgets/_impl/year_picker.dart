@@ -1,13 +1,13 @@
-part of '../calendar_date_picker2.dart';
+part of '../calendar_date_picker_alex.dart';
 
 /// A scrollable grid of years to allow picking a year.
 ///
 /// The year picker widget is rarely used directly. Instead, consider using
-/// [CalendarDatePicker2], or [showDatePicker2] which create full date pickers.
+/// [CalendarDatePickerAlex], or [showDatePicker2] which create full date pickers.
 ///
 /// See also:
 ///
-///  * [CalendarDatePicker2], which provides a Material Design date picker
+///  * [CalendarDatePickerAlex], which provides a Material Design date picker
 ///    interface.
 ///
 ///  * [showDatePicker2], which shows a dialog containing a Material Design
@@ -25,7 +25,7 @@ class YearPicker extends StatefulWidget {
   }) : super(key: key);
 
   /// The calendar configurations
-  final CalendarDatePicker2Config config;
+  final CalendarDatePickerAlexConfig config;
 
   /// The currently selected dates.
   ///
