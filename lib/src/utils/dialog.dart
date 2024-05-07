@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:calendar_date_picker_alex/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 
 Future<List<DateTime?>?> showCalendarDatePicker2Dialog({
