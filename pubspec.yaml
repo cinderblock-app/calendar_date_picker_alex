@@ -1,7 +1,7 @@
 name: calendar_date_picker_alex
 description: A lightweight and customizable calendar picker based on Flutter CalendarDatePicker, with support for single date picker, range picker and multi picker.
 version: 1.0.2
-homepage: https://github.com/cinderblock-app/calendar_date_picker_alex
+homepage: https://github.com/theideasaler/calendar_date_picker2
 
 environment:
   sdk: ">=2.16.2 <4.0.0"
