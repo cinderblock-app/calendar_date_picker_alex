@@ -74,17 +74,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: SizedBox(
-          width: 375,
-          child: ListView(
-            children: <Widget>[
-              _buildCalendarDialogButton(),
-              _buildDefaultSingleDatePickerWithValue(),
-              _buildDefaultMultiDatePickerWithValue(),
-              _buildDefaultRangeDatePickerWithValue(),
-              _buildCalendarWithActionButtons(),
-            ],
-          ),
+        child: ListView(
+          children: <Widget>[
+            _buildCustomSingleDatePickerWithValue(),
+            _buildCalendarDialogButton(),
+            _buildDefaultSingleDatePickerWithValue(),
+            _buildDefaultMultiDatePickerWithValue(),
+            _buildDefaultRangeDatePickerWithValue(),
+            _buildCalendarWithActionButtons(),
+          ],
         ),
       ),
     );
@@ -312,6 +310,106 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         const SizedBox(height: 10),
         const Text('Single Date Picker (With default value)'),
+        CalendarDatePicker2(
+          config: config,
+          value: _singleDatePickerValueWithDefaultValue,
+          onValueChanged: (dates) =>
+              setState(() => _singleDatePickerValueWithDefaultValue = dates),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Selection(s):  '),
+            const SizedBox(width: 10),
+            Text(
+              _getValueText(
+                config.calendarType,
+                _singleDatePickerValueWithDefaultValue,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 25),
+      ],
+    );
+  }
+
+  Widget _buildCustomSingleDatePickerWithValue() {
+    final config = CalendarDatePicker2Config(
+      selectedDayHighlightColor: const Color(0xff1570EF),
+      weekdayLabels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      weekdayLabelTextStyle: const TextStyle(
+        fontFamily: "Inter",
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Color(0xff121926),
+        height: 18 / 14,
+      ),
+      firstDayOfWeek: 0,
+      controlsHeight: 24,
+      controlsTextStyle: const TextStyle(
+        fontFamily: "Inter",
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Color(0xff202939),
+        height: 18 / 14,
+      ),
+      dayTextStyle: const TextStyle(
+        fontFamily: "Inter",
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Color(0xff000000),
+        height: 21 / 16,
+      ),
+      disabledDayTextStyle: const TextStyle(
+        fontFamily: "Inter",
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Color(0xff9aa4b2),
+        height: 21 / 16,
+      ),
+      centerAlignModePicker: true,
+      useAbbrLabelForMonthModePicker: true,
+      firstDate: DateTime(DateTime.now().year - 2, DateTime.now().month - 1,
+          DateTime.now().day - 5),
+      lastDate: DateTime(DateTime.now().year + 3, DateTime.now().month + 2,
+          DateTime.now().day + 10),
+      selectableDayPredicate: (day) => !day
+          .difference(DateTime.now().subtract(const Duration(days: 1)))
+          .isNegative,
+      disableModePicker: true,
+      disableMonthPicker: true,
+      todayTextStyle: const TextStyle(
+        fontFamily: "Inter",
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Color(0xff1570ef),
+        height: 21 / 16,
+      ),
+      selectedDayTextStyle: const TextStyle(
+        fontFamily: "Inter",
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+        height: 21 / 16,
+      ),
+      lastMonthIcon: const Icon(
+        Icons.chevron_left,
+        size: 24,
+        color: Colors.black,
+      ),
+      nextMonthIcon: const Icon(
+        Icons.chevron_right,
+        size: 24,
+        color: Colors.black,
+      ),
+      dayBorderRadius: const BorderRadius.all(Radius.circular(8)),
+      daySplashColor: Colors.transparent,
+    );
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
         CalendarDatePicker2(
           config: config,
           value: _singleDatePickerValueWithDefaultValue,

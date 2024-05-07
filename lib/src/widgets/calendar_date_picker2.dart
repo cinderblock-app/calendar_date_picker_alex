@@ -9,6 +9,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:jiffy/jiffy.dart';
 
 part '_impl/_calendar_view.dart';
 part '_impl/_date_picker_mode_toggle_button.dart';
@@ -19,12 +20,11 @@ part '_impl/year_picker.dart';
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
-const double _dayPickerRowHeight = 42.0;
+const double _dayPickerRowHeight = 48.0;
 const int _maxDayPickerRowCount = 6; // A 31 day month that starts on Saturday.
 // One extra row for the day-of-week header.
-const double _maxDayPickerHeight =
-    _dayPickerRowHeight * (_maxDayPickerRowCount + 1);
-const double _monthPickerHorizontalPadding = 8.0;
+// const double _maxDayPickerHeight =
+//     _dayPickerRowHeight * (_maxDayPickerRowCount + 1);
 
 const int _yearPickerColumnCount = 3;
 const double _yearPickerPadding = 16.0;
@@ -166,26 +166,27 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
     }
   }
 
-  void _handleModeChanged(CalendarDatePicker2Mode mode) {
-    _vibrate();
-    setState(() {
-      _mode = mode;
-      if (_selectedDates.isNotEmpty) {
-        for (final date in _selectedDates) {
-          if (date != null) {
-            SemanticsService.announce(
-              _mode == CalendarDatePicker2Mode.day
-                  ? _localizations.formatMonthYear(date)
-                  : _mode == CalendarDatePicker2Mode.month
-                      ? _localizations.formatMonthYear(date)
-                      : _localizations.formatYear(date),
-              _textDirection,
-            );
-          }
-        }
-      }
-    });
-  }
+  // Commented because not used atm
+  // void _handleModeChanged(CalendarDatePicker2Mode mode) {
+  //   _vibrate();
+  //   setState(() {
+  //     _mode = mode;
+  //     if (_selectedDates.isNotEmpty) {
+  //       for (final date in _selectedDates) {
+  //         if (date != null) {
+  //           SemanticsService.announce(
+  //             _mode == CalendarDatePicker2Mode.day
+  //                 ? _localizations.formatMonthYear(date)
+  //                 : _mode == CalendarDatePicker2Mode.month
+  //                     ? _localizations.formatMonthYear(date)
+  //                     : _localizations.formatYear(date),
+  //             _textDirection,
+  //           );
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 
   void _handleDisplayedMonthDateChanged(
     DateTime date, {
@@ -347,45 +348,39 @@ class _CalendarDatePicker2State extends State<CalendarDatePicker2> {
     }
   }
 
+  int _numberOfWeeksThisMonth() {
+    _currentDisplayedMonthDate;
+    final numberOfDays = DateTime(_currentDisplayedMonthDate.year,
+            _currentDisplayedMonthDate.month + 1, 0)
+        .day;
+    final List<int> weeks = <int>[];
+    for (int i = 1; i <= numberOfDays; i++) {
+      final int week = Jiffy.parseFromDateTime(DateTime(
+              _currentDisplayedMonthDate.year,
+              _currentDisplayedMonthDate.month,
+              i))
+          .weekOfYear;
+      if (!weeks.contains(week)) {
+        weeks.add(week);
+      }
+    }
+
+    return weeks.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasMaterialLocalizations(context));
     assert(debugCheckHasDirectionality(context));
-    return Stack(
+
+    final maxDayPickerRowCount = _numberOfWeeksThisMonth();
+    final height = _dayPickerRowHeight * (maxDayPickerRowCount + 2);
+    return Column(
       children: <Widget>[
         SizedBox(
-          height: (widget.config.controlsHeight ?? _subHeaderHeight) +
-              _maxDayPickerHeight,
+          height: (widget.config.controlsHeight ?? _subHeaderHeight) + height,
           child: _buildPicker(),
-        ),
-        // Put the mode toggle button on top so that it won't be covered up by the _CalendarView
-        _DatePickerModeToggleButton(
-          config: widget.config,
-          mode: _mode,
-          monthDate: _currentDisplayedMonthDate,
-          onMonthPressed: () {
-            if (_mode == CalendarDatePicker2Mode.year) {
-              _handleModeChanged(CalendarDatePicker2Mode.month);
-            } else {
-              _handleModeChanged(
-                _mode == CalendarDatePicker2Mode.month
-                    ? CalendarDatePicker2Mode.day
-                    : CalendarDatePicker2Mode.month,
-              );
-            }
-          },
-          onYearPressed: () {
-            if (_mode == CalendarDatePicker2Mode.month) {
-              _handleModeChanged(CalendarDatePicker2Mode.year);
-            } else {
-              _handleModeChanged(
-                _mode == CalendarDatePicker2Mode.year
-                    ? CalendarDatePicker2Mode.day
-                    : CalendarDatePicker2Mode.year,
-              );
-            }
-          },
         ),
       ],
     );

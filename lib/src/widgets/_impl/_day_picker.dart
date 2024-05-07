@@ -296,21 +296,17 @@ class _DayPickerState extends State<_DayPicker> {
           }
         }
 
-        dayWidget = Padding(
-          padding: const EdgeInsets.symmetric(vertical: 1),
-          child: dayWidget,
-        );
-
         if (isDisabled) {
           dayWidget = ExcludeSemantics(
             child: dayWidget,
           );
         } else {
-          dayWidget = InkResponse(
+          dayWidget = InkWell(
             focusNode: _dayFocusNodes[day - 1],
             onTap: () => widget.onChanged(dayToBuild),
-            radius: _dayPickerRowHeight / 2 + 4,
+            borderRadius: BorderRadius.circular(8),
             splashColor: daySplashColor,
+            highlightColor: const Color(0xffD1E9FF), // Primary 100
             child: Semantics(
               // We want the day of month to be spoken first irrespective of the
               // locale-specific preferences or TextDirection. This is because
@@ -327,22 +323,21 @@ class _DayPickerState extends State<_DayPicker> {
           );
         }
 
+        dayWidget = Padding(
+          padding: const EdgeInsetsDirectional.all(4),
+          child: dayWidget,
+        );
         dayItems.add(dayWidget);
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: _monthPickerHorizontalPadding,
-      ),
-      child: GridView.custom(
-        padding: EdgeInsets.zero,
-        physics: const ClampingScrollPhysics(),
-        gridDelegate: _dayPickerGridDelegate,
-        childrenDelegate: SliverChildListDelegate(
-          dayItems,
-          addRepaintBoundaries: false,
-        ),
+    return GridView.custom(
+      padding: EdgeInsets.zero,
+      physics: const ClampingScrollPhysics(),
+      gridDelegate: _dayPickerGridDelegate,
+      childrenDelegate: SliverChildListDelegate(
+        dayItems,
+        addRepaintBoundaries: false,
       ),
     );
   }
@@ -385,9 +380,14 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
       _dayPickerRowHeight,
       constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 1),
     );
+
+    // NOTE: We want to have our boxes 48 x 48 (with 4 padding in each direction - added above)
+    // this way we will have the boxes 40 x 40
+    // but in case of smaller screens we will reduce the size of the box
+    final double boxSize = math.min(tileWidth, _dayPickerRowHeight);
     return SliverGridRegularTileLayout(
-      childCrossAxisExtent: tileWidth,
-      childMainAxisExtent: tileHeight,
+      childCrossAxisExtent: boxSize,
+      childMainAxisExtent: boxSize,
       crossAxisCount: columnCount,
       crossAxisStride: tileWidth,
       mainAxisStride: tileHeight,

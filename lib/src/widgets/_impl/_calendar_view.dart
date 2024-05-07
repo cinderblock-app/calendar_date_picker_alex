@@ -331,8 +331,21 @@ class _CalendarViewState extends State<_CalendarView> {
                       : _localizations.previousMonthTooltip,
                   onPressed:
                       _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                  splashRadius: 24,
+                  constraints:
+                      const BoxConstraints(minWidth: 24, minHeight: 24),
+                  padding: EdgeInsets.zero,
                 ),
-                if (widget.config.centerAlignModePicker == true) const Spacer(),
+                Expanded(
+                  child: Text(
+                    widget.config.modePickerTextHandler
+                            ?.call(monthDate: widget.initialMonth) ??
+                        _localizations.formatMonthYear(widget.initialMonth),
+                    overflow: TextOverflow.ellipsis,
+                    style: widget.config.controlsTextStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 IconButton(
                   icon: widget.config.nextMonthIcon ??
                       const Icon(Icons.chevron_right),
@@ -341,6 +354,10 @@ class _CalendarViewState extends State<_CalendarView> {
                       ? null
                       : _localizations.nextMonthTooltip,
                   onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                  splashRadius: 24,
+                  constraints:
+                      const BoxConstraints(minWidth: 24, minHeight: 24),
+                  padding: EdgeInsets.zero,
                 ),
               ],
             ),
