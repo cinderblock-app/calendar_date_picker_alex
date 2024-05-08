@@ -301,32 +301,50 @@ class _DayPickerState extends State<_DayPicker> {
             child: dayWidget,
           );
         } else {
-          dayWidget = InkWell(
-            focusNode: _dayFocusNodes[day - 1],
-            onTap: () => widget.onChanged(dayToBuild),
-            borderRadius: BorderRadius.circular(8),
-            splashColor: daySplashColor,
-            highlightColor: const Color(0xffD1E9FF), // Primary 100
-            child: Semantics(
-              // We want the day of month to be spoken first irrespective of the
-              // locale-specific preferences or TextDirection. This is because
-              // an accessibility user is more likely to be interested in the
-              // day of month before the rest of the date, as they are looking
-              // for the day of month. To do that we prepend day of month to the
-              // formatted full date.
-              label:
-                  '${localizations.formatDecimal(day)}, ${localizations.formatFullDate(dayToBuild)}',
-              selected: isSelectedDay,
-              excludeSemantics: true,
-              child: dayWidget,
-            ),
+          dayWidget = Row(
+            children: [
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsetsDirectional.all(4),
+                child: InkWell(
+                  focusNode: _dayFocusNodes[day - 1],
+                  onTap: () => widget.onChanged(dayToBuild),
+                  borderRadius: BorderRadius.circular(8),
+                  splashColor: daySplashColor,
+                  highlightColor: const Color(0xffD1E9FF),
+                  // Primary 100
+                  child: Semantics(
+                    // We want the day of month to be spoken first irrespective of the
+                    // locale-specific preferences or TextDirection. This is because
+                    // an accessibility user is more likely to be interested in the
+                    // day of month before the rest of the date, as they are looking
+                    // for the day of month. To do that we prepend day of month to the
+                    // formatted full date.
+                    label:
+                        '${localizations.formatDecimal(day)}, ${localizations.formatFullDate(dayToBuild)}',
+                    selected: isSelectedDay,
+                    excludeSemantics: true,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(
+                        decoration: decoration,
+                        child: Center(
+                          child: Text(
+                            localizations.formatDecimal(day),
+                            style: dayTextStyle,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+            ],
           );
         }
 
-        dayWidget = Padding(
-          padding: const EdgeInsetsDirectional.all(4),
-          child: dayWidget,
-        );
+        dayWidget = dayWidget;
         dayItems.add(dayWidget);
       }
     }
@@ -386,7 +404,7 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
     // but in case of smaller screens we will reduce the size of the box
     final double boxSize = math.min(tileWidth, _dayPickerRowHeight);
     return SliverGridRegularTileLayout(
-      childCrossAxisExtent: boxSize,
+      childCrossAxisExtent: tileWidth,
       childMainAxisExtent: boxSize,
       crossAxisCount: columnCount,
       crossAxisStride: tileWidth,
