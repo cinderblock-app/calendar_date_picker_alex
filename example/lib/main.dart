@@ -406,6 +406,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       dayBorderRadius: const BorderRadius.all(Radius.circular(8)),
       daySplashColor: Colors.transparent,
+      headerPadding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
+      calendarPadding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
     );
     return Column(
       mainAxisSize: MainAxisSize.min,
