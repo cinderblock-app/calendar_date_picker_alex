@@ -296,13 +296,16 @@ class _CalendarViewState extends State<_CalendarView> {
   Widget _buildItems(BuildContext context, int index) {
     final DateTime month =
         DateUtils.addMonthsToMonthDate(widget.config.firstDate, index);
-    return _DayPicker(
-      key: ValueKey<DateTime>(month),
-      selectedDates: (widget.selectedDates..removeWhere((d) => d == null))
-          .cast<DateTime>(),
-      onChanged: _handleDateSelected,
-      config: widget.config,
-      displayedMonth: month,
+    return Padding(
+      padding: widget.config.calendarPadding ?? EdgeInsetsDirectional.zero,
+      child: _DayPicker(
+        key: ValueKey<DateTime>(month),
+        selectedDates: (widget.selectedDates..removeWhere((d) => d == null))
+            .cast<DateTime>(),
+        onChanged: _handleDateSelected,
+        config: widget.config,
+        displayedMonth: month,
+      ),
     );
   }
 
@@ -310,6 +313,7 @@ class _CalendarViewState extends State<_CalendarView> {
   Widget build(BuildContext context) {
     final Color controlColor =
         Theme.of(context).colorScheme.onSurface.withOpacity(0.60);
+    const double size = 28;
 
     return Semantics(
       child: Column(
@@ -319,47 +323,64 @@ class _CalendarViewState extends State<_CalendarView> {
                 ? const EdgeInsetsDirectional.only(start: 16, end: 4)
                 : const EdgeInsetsDirectional.only(start: 8, end: 8),
             height: (widget.config.controlsHeight ?? _subHeaderHeight),
-            child: Row(
-              children: <Widget>[
-                if (widget.config.centerAlignModePicker != true) const Spacer(),
-                IconButton(
-                  icon: widget.config.lastMonthIcon ??
-                      const Icon(Icons.chevron_left),
-                  color: controlColor,
-                  tooltip: _isDisplayingFirstMonth
-                      ? null
-                      : _localizations.previousMonthTooltip,
-                  onPressed:
-                      _isDisplayingFirstMonth ? null : _handlePreviousMonth,
-                  splashRadius: 24,
-                  constraints:
-                      const BoxConstraints(minWidth: 24, minHeight: 24),
-                  padding: EdgeInsets.zero,
-                ),
-                Expanded(
-                  child: Text(
-                    widget.config.modePickerTextHandler
-                            ?.call(monthDate: widget.initialMonth) ??
-                        _localizations.formatMonthYear(widget.initialMonth),
-                    overflow: TextOverflow.ellipsis,
-                    style: widget.config.controlsTextStyle,
-                    textAlign: TextAlign.center,
+            child: Padding(
+              padding:
+                  widget.config.calendarPadding ?? EdgeInsetsDirectional.zero,
+              child: Row(
+                children: <Widget>[
+                  if (widget.config.centerAlignModePicker != true)
+                    const Spacer(),
+                  IconButton(
+                    icon: widget.config.lastMonthIcon ??
+                        const Icon(Icons.chevron_left),
+                    color: controlColor,
+                    tooltip: _isDisplayingFirstMonth
+                        ? null
+                        : _localizations.previousMonthTooltip,
+                    onPressed:
+                        _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                    style: const ButtonStyle(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    constraints: const BoxConstraints(
+                      maxWidth: size,
+                      minWidth: size,
+                      maxHeight: size,
+                      minHeight: size,
+                    ),
+                    padding: EdgeInsets.zero,
                   ),
-                ),
-                IconButton(
-                  icon: widget.config.nextMonthIcon ??
-                      const Icon(Icons.chevron_right),
-                  color: controlColor,
-                  tooltip: _isDisplayingLastMonth
-                      ? null
-                      : _localizations.nextMonthTooltip,
-                  onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
-                  splashRadius: 24,
-                  constraints:
-                      const BoxConstraints(minWidth: 24, minHeight: 24),
-                  padding: EdgeInsets.zero,
-                ),
-              ],
+                  Expanded(
+                    child: Text(
+                      widget.config.modePickerTextHandler
+                              ?.call(monthDate: widget.initialMonth) ??
+                          _localizations.formatMonthYear(widget.initialMonth),
+                      overflow: TextOverflow.ellipsis,
+                      style: widget.config.controlsTextStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  IconButton(
+                    icon: widget.config.nextMonthIcon ??
+                        const Icon(Icons.chevron_right),
+                    color: controlColor,
+                    tooltip: _isDisplayingLastMonth
+                        ? null
+                        : _localizations.nextMonthTooltip,
+                    onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                    style: const ButtonStyle(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    constraints: const BoxConstraints(
+                      maxWidth: size,
+                      minWidth: size,
+                      maxHeight: size,
+                      minHeight: size,
+                    ),
+                    padding: EdgeInsets.zero,
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(

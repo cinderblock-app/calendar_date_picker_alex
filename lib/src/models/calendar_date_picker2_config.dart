@@ -108,6 +108,8 @@ class CalendarDatePickerAlexConfig {
     this.allowSameValueSelection,
     this.disableMonthPicker,
     this.useAbbrLabelForMonthModePicker,
+    this.headerPadding,
+    this.calendarPadding,
   })  : calendarType = calendarType ?? CalendarDatePickerAlexType.single,
         firstDate = DateUtils.dateOnly(firstDate ?? DateTime(1970)),
         lastDate =
@@ -250,6 +252,9 @@ class CalendarDatePickerAlexConfig {
 
   /// Use Abbreviation label for month mode picker, only works when month picker is enabled
   final bool? useAbbrLabelForMonthModePicker;
+
+  final EdgeInsetsDirectional? headerPadding;
+  final EdgeInsetsDirectional? calendarPadding;
 
   CalendarDatePickerAlexConfig copyWith({
     CalendarDatePickerAlexType? calendarType,
