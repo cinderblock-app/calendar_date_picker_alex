@@ -105,6 +105,8 @@ class CalendarDatePickerAlexConfig {
     this.rangeBidirectional,
     this.calendarViewScrollPhysics,
     this.daySplashColor,
+    this.dayHighlightColor,
+    this.arrowsHighlightColor,
     this.allowSameValueSelection,
     this.disableMonthPicker,
     this.useAbbrLabelForMonthModePicker,
@@ -243,6 +245,12 @@ class CalendarDatePickerAlexConfig {
 
   /// The splash color of the day widget
   final Color? daySplashColor;
+
+  /// The Highlight color of the day widget
+  final Color? dayHighlightColor;
+
+  /// The Highlight color of the arrows
+  final Color? arrowsHighlightColor;
 
   /// When set to true, [onValueChanged] will be called on the same value selection
   final bool? allowSameValueSelection;

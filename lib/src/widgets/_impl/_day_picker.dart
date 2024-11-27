@@ -126,6 +126,8 @@ class _DayPickerState extends State<_DayPicker> {
     final Color todayColor = colorScheme.primary;
     final Color daySplashColor =
         widget.config.daySplashColor ?? selectedDayBackground.withOpacity(0.38);
+    final Color dayHighlightColorColor = widget.config.dayHighlightColor ??
+        selectedDayBackground.withOpacity(0.38);
 
     final int year = widget.displayedMonth.year;
     final int month = widget.displayedMonth.month;
@@ -311,7 +313,7 @@ class _DayPickerState extends State<_DayPicker> {
                   onTap: () => widget.onChanged(dayToBuild),
                   borderRadius: BorderRadius.circular(8),
                   splashColor: daySplashColor,
-                  highlightColor: const Color(0xffD1E9FF),
+                  highlightColor: dayHighlightColorColor,
                   // Primary 100
                   child: Semantics(
                     // We want the day of month to be spoken first irrespective of the
