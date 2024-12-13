@@ -12,20 +12,18 @@ import 'package:flutter/services.dart';
 import 'package:jiffy/jiffy.dart';
 
 part '_impl/_calendar_view.dart';
+
 part '_impl/_date_picker_mode_toggle_button.dart';
+
 part '_impl/_day_picker.dart';
+
 part '_impl/_focus_date.dart';
+
 part '_impl/_month_picker.dart';
+
 part '_impl/year_picker.dart';
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
-
-const double _dayPickerRowHeight = 48.0;
-const int _maxDayPickerRowCount = 6; // A 31 day month that starts on Saturday.
-// One extra row for the day-of-week header.
-// const double _maxDayPickerHeight =
-//     _dayPickerRowHeight * (_maxDayPickerRowCount + 1);
-
 const int _yearPickerColumnCount = 3;
 const double _yearPickerPadding = 16.0;
 const double _yearPickerRowHeight = 52.0;
@@ -374,15 +372,18 @@ class _CalendarDatePickerAlexState extends State<CalendarDatePickerAlex> {
     assert(debugCheckHasMaterialLocalizations(context));
     assert(debugCheckHasDirectionality(context));
 
-    final maxDayPickerRowCount = _numberOfWeeksThisMonth();
-    final height = _dayPickerRowHeight * (maxDayPickerRowCount + 2);
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          height: (widget.config.controlsHeight ?? _subHeaderHeight) + height,
-          child: _buildPicker(),
-        ),
-      ],
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      final maxDayPickerRowCount = _numberOfWeeksThisMonth();
+      final calendarPadding = widget.config.calendarPaddingSize ?? 0;
+      final double tileWidth =
+          (constraints.maxWidth - calendarPadding) / DateTime.daysPerWeek;
+      final header = widget.config.controlsHeight ?? _subHeaderHeight;
+      final height = (tileWidth * (maxDayPickerRowCount + 1)) + header;
+      return SizedBox(
+        width: constraints.maxWidth,
+        height: height,
+        child: _buildPicker(),
+      );
+    });
   }
 }

@@ -408,6 +408,7 @@ class _MyHomePageState extends State<MyHomePage> {
       daySplashColor: Colors.transparent,
       headerPadding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
       calendarPadding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
+      calendarPaddingSize: 24,
     );
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -418,7 +419,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onValueChanged: (dates) =>
               setState(() => _singleDatePickerValueWithDefaultValue = dates),
         ),
-        const SizedBox(height: 10),
+        const Divider(),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [

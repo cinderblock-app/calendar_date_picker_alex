@@ -318,6 +318,7 @@ class _CalendarViewState extends State<_CalendarView> {
 
     return Semantics(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
             padding: widget.config.headerPadding ?? EdgeInsetsDirectional.zero,
@@ -382,7 +383,7 @@ class _CalendarViewState extends State<_CalendarView> {
               ],
             ),
           ),
-          Expanded(
+          Flexible(
             child: FocusableActionDetector(
               shortcuts: _shortcutMap,
               actions: _actionMap,

@@ -112,6 +112,7 @@ class CalendarDatePickerAlexConfig {
     this.useAbbrLabelForMonthModePicker,
     this.headerPadding,
     this.calendarPadding,
+    this.calendarPaddingSize,
   })  : calendarType = calendarType ?? CalendarDatePickerAlexType.single,
         firstDate = DateUtils.dateOnly(firstDate ?? DateTime(1970)),
         lastDate =
@@ -263,6 +264,7 @@ class CalendarDatePickerAlexConfig {
 
   final EdgeInsetsDirectional? headerPadding;
   final EdgeInsetsDirectional? calendarPadding;
+  final double? calendarPaddingSize;
 
   CalendarDatePickerAlexConfig copyWith({
     CalendarDatePickerAlexType? calendarType,

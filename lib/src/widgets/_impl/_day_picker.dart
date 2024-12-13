@@ -396,21 +396,12 @@ class _DayPickerGridDelegate extends SliverGridDelegate {
   SliverGridLayout getLayout(SliverConstraints constraints) {
     const int columnCount = DateTime.daysPerWeek;
     final double tileWidth = constraints.crossAxisExtent / columnCount;
-    final double tileHeight = math.min(
-      _dayPickerRowHeight,
-      constraints.viewportMainAxisExtent / (_maxDayPickerRowCount + 1),
-    );
-
-    // NOTE: We want to have our boxes 48 x 48 (with 4 padding in each direction - added above)
-    // this way we will have the boxes 40 x 40
-    // but in case of smaller screens we will reduce the size of the box
-    final double boxSize = math.min(tileWidth, _dayPickerRowHeight);
     return SliverGridRegularTileLayout(
       childCrossAxisExtent: tileWidth,
-      childMainAxisExtent: boxSize,
+      childMainAxisExtent: tileWidth,
       crossAxisCount: columnCount,
       crossAxisStride: tileWidth,
-      mainAxisStride: tileHeight,
+      mainAxisStride: tileWidth,
       reverseCrossAxis: axisDirectionIsReversed(constraints.crossAxisDirection),
     );
   }
