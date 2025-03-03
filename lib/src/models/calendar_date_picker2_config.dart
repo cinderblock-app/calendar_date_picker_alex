@@ -113,6 +113,7 @@ class CalendarDatePickerAlexConfig {
     this.headerPadding,
     this.calendarPadding,
     this.calendarPaddingSize,
+    this.borderRadius,
   })  : calendarType = calendarType ?? CalendarDatePickerAlexType.single,
         firstDate = DateUtils.dateOnly(firstDate ?? DateTime(1970)),
         lastDate =
@@ -265,6 +266,9 @@ class CalendarDatePickerAlexConfig {
   final EdgeInsetsDirectional? headerPadding;
   final EdgeInsetsDirectional? calendarPadding;
   final double? calendarPaddingSize;
+
+  // border radius is used because for calendar date range we need to have border only on a single side
+  final double? borderRadius;
 
   CalendarDatePickerAlexConfig copyWith({
     CalendarDatePickerAlexType? calendarType,

@@ -140,6 +140,7 @@ class _DayPickerState extends State<_DayPicker> {
     // 1-based day of month, e.g. 1-31 for January, and 1-29 for February on
     // a leap year.
     int day = -dayOffset;
+    // List<int> rangeRows = [];
     while (day < daysInMonth) {
       day++;
       if (day < 1) {
@@ -244,6 +245,34 @@ class _DayPickerState extends State<_DayPicker> {
               dayTextStyle,
             );
 
+        if (isDisabled) {
+          dayWidget = ExcludeSemantics(
+            child: dayWidget,
+          );
+        } else {
+          dayWidget = InkWell(
+            focusNode: _dayFocusNodes[day - 1],
+            onTap: () => widget.onChanged(dayToBuild),
+            borderRadius: BorderRadius.circular(8),
+            splashColor: daySplashColor,
+            highlightColor: dayHighlightColorColor,
+            // Primary 100
+            child: Semantics(
+              // We want the day of month to be spoken first irrespective of the
+              // locale-specific preferences or TextDirection. This is because
+              // an accessibility user is more likely to be interested in the
+              // day of month before the rest of the date, as they are looking
+              // for the day of month. To do that we prepend day of month to the
+              // formatted full date.
+              label:
+                  '${localizations.formatDecimal(day)}, ${localizations.formatFullDate(dayToBuild)}',
+              selected: isSelectedDay,
+              excludeSemantics: true,
+              child: dayWidget,
+            ),
+          );
+        }
+
         if (isDateInBetweenRangePickerSelectedDates) {
           final rangePickerIncludedDayDecoration = BoxDecoration(
             color: widget.config.selectedRangeHighlightColor ??
@@ -252,104 +281,137 @@ class _DayPickerState extends State<_DayPicker> {
                     .withOpacity(0.15),
           );
 
+          // rangeRows.add(((dayItems.length) / 7).toInt());
           if (DateUtils.isSameDay(
             DateUtils.dateOnly(widget.selectedDates[0]),
             dayToBuild,
           )) {
-            dayWidget = Stack(
-              children: [
-                Row(children: [
-                  const Spacer(),
-                  Expanded(
+            dayWidget = IntrinsicWidth(
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      start: 4,
+                      top: 4,
+                      bottom: 4,
+                    ),
                     child: Container(
-                      decoration: rangePickerIncludedDayDecoration,
+                      decoration: rangePickerIncludedDayDecoration.copyWith(
+                        borderRadius: BorderRadiusDirectional.only(
+                          topStart:
+                              Radius.circular(widget.config.borderRadius ?? 0),
+                          bottomStart:
+                              Radius.circular(widget.config.borderRadius ?? 0),
+                        ),
+                      ),
                     ),
                   ),
-                ]),
-                dayWidget,
-              ],
+                  Padding(
+                    padding: const EdgeInsetsDirectional.all(4),
+                    child: dayWidget,
+                  ),
+                ],
+              ),
             );
           } else if (DateUtils.isSameDay(
             DateUtils.dateOnly(widget.selectedDates[1]),
             dayToBuild,
           )) {
-            dayWidget = Stack(
-              children: [
-                Row(children: [
-                  Expanded(
-                    child: Container(
-                      decoration: rangePickerIncludedDayDecoration,
+            dayWidget = IntrinsicWidth(
+              child: Stack(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      top: 4,
+                      bottom: 4,
+                      end: 4,
                     ),
-                  ),
-                  const Spacer(),
-                ]),
-                dayWidget,
-              ],
-            );
-          } else {
-            dayWidget = Stack(
-              children: [
-                Container(
-                  decoration: rangePickerIncludedDayDecoration,
-                ),
-                dayWidget,
-              ],
-            );
-          }
-        }
-
-        if (isDisabled) {
-          dayWidget = ExcludeSemantics(
-            child: dayWidget,
-          );
-        } else {
-          dayWidget = Row(
-            children: [
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsetsDirectional.all(4),
-                child: InkWell(
-                  focusNode: _dayFocusNodes[day - 1],
-                  onTap: () => widget.onChanged(dayToBuild),
-                  borderRadius: BorderRadius.circular(8),
-                  splashColor: daySplashColor,
-                  highlightColor: dayHighlightColorColor,
-                  // Primary 100
-                  child: Semantics(
-                    // We want the day of month to be spoken first irrespective of the
-                    // locale-specific preferences or TextDirection. This is because
-                    // an accessibility user is more likely to be interested in the
-                    // day of month before the rest of the date, as they are looking
-                    // for the day of month. To do that we prepend day of month to the
-                    // formatted full date.
-                    label:
-                        '${localizations.formatDecimal(day)}, ${localizations.formatFullDate(dayToBuild)}',
-                    selected: isSelectedDay,
-                    excludeSemantics: true,
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Container(
-                        decoration: decoration,
-                        child: Center(
-                          child: Text(
-                            localizations.formatDecimal(day),
-                            style: dayTextStyle,
-                          ),
+                    child: Container(
+                      decoration: rangePickerIncludedDayDecoration.copyWith(
+                        borderRadius: BorderRadiusDirectional.only(
+                          topEnd:
+                              Radius.circular(widget.config.borderRadius ?? 0),
+                          bottomEnd:
+                              Radius.circular(widget.config.borderRadius ?? 0),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.all(4),
+                    child: dayWidget,
+                  ),
+                ],
               ),
-              const Spacer(),
-            ],
+            );
+          } else {
+            dayWidget = Container(
+              decoration: rangePickerIncludedDayDecoration,
+              margin: const EdgeInsetsDirectional.symmetric(vertical: 4),
+              child: dayWidget,
+            );
+          }
+        } else {
+          // Add regular padding
+          dayWidget = Padding(
+            padding: const EdgeInsetsDirectional.all(4),
+            child: dayWidget,
           );
         }
 
-        dayWidget = dayWidget;
         dayItems.add(dayWidget);
       }
     }
+
+    // final rows = (dayItems.length / 7).ceil();
+    // rangeRows = rangeRows.toSet().toList();
+    //
+    // // Color pad
+    // final colorPad = Expanded(
+    //   child: Padding(
+    //     padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
+    //     child: Container(
+    //       width: widget.config.calendarPaddingSize,
+    //       color: widget.config.selectedRangeHighlightColor ??
+    //           (widget.config.selectedDayHighlightColor ?? selectedDayBackground)
+    //               .withOpacity(0.15),
+    //     ),
+    //   ),
+    // );
+    //
+    // final spacingPad = Expanded(
+    //   child: Padding(
+    //     padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
+    //     child: Container(
+    //       width: widget.config.calendarPaddingSize,
+    //       color: Colors.white,
+    //     ),
+    //   ),
+    // );
+    //
+    // final List<Widget> firstRow = [];
+    // final List<Widget> secondRow = [];
+    //
+    // firstRow.add(spacingPad);
+    // secondRow.add(spacingPad);
+    // for (int i = 1; i < rows; i++) {
+    //   if (rangeRows.contains(i)) {
+    //     if (i != rangeRows.first) {
+    //       firstRow.add(colorPad);
+    //     } else {
+    //       firstRow.add(spacingPad);
+    //     }
+    //
+    //     if (i != rangeRows.last) {
+    //       secondRow.add(colorPad);
+    //     } else {
+    //       secondRow.add(spacingPad);
+    //     }
+    //   } else {
+    //     firstRow.add(spacingPad);
+    //     secondRow.add(spacingPad);
+    //   }
+    // }
 
     return GridView.custom(
       padding: EdgeInsets.zero,
@@ -360,6 +422,42 @@ class _DayPickerState extends State<_DayPicker> {
         addRepaintBoundaries: false,
       ),
     );
+
+    // return IntrinsicHeight(
+    //   child: Stack(
+    //     alignment: AlignmentDirectional.centerStart,
+    //     children: <Widget>[
+    //       Padding(
+    //         padding:
+    //             widget.config.calendarPadding ?? EdgeInsetsDirectional.zero,
+    //         child: GridView.custom(
+    //           padding: EdgeInsets.zero,
+    //           physics: const ClampingScrollPhysics(),
+    //           gridDelegate: _dayPickerGridDelegate,
+    //           childrenDelegate: SliverChildListDelegate(
+    //             dayItems,
+    //             addRepaintBoundaries: false,
+    //           ),
+    //         ),
+    //       ),
+    //       // Build background
+    //       SizedBox(
+    //         height: 430,
+    //         child: Row(
+    //           children: <Widget>[
+    //             Column(
+    //               children: <Widget>[...firstRow],
+    //             ),
+    //             const Spacer(),
+    //             Column(
+    //               children: <Widget>[...secondRow],
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   Widget _buildDefaultDayWidgetContent(
@@ -368,23 +466,17 @@ class _DayPickerState extends State<_DayPicker> {
     int day,
     TextStyle dayTextStyle,
   ) {
-    return Row(
-      children: [
-        const Spacer(),
-        AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            decoration: decoration,
-            child: Center(
-              child: Text(
-                localizations.formatDecimal(day),
-                style: dayTextStyle,
-              ),
-            ),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Container(
+        decoration: decoration,
+        child: Center(
+          child: Text(
+            localizations.formatDecimal(day),
+            style: dayTextStyle,
           ),
         ),
-        const Spacer(),
-      ],
+      ),
     );
   }
 }

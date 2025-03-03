@@ -409,6 +409,7 @@ class _MyHomePageState extends State<MyHomePage> {
       headerPadding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
       calendarPadding: const EdgeInsetsDirectional.symmetric(horizontal: 24),
       calendarPaddingSize: 24,
+      borderRadius: 8,
     );
     return Column(
       mainAxisSize: MainAxisSize.min,
