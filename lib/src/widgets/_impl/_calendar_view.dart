@@ -325,29 +325,30 @@ class _CalendarViewState extends State<_CalendarView> {
             child: Row(
               children: <Widget>[
                 if (widget.config.centerAlignModePicker != true) const Spacer(),
-                IconButton(
-                  icon: widget.config.lastMonthIcon ??
-                      const Icon(Icons.chevron_left),
-                  color: controlColor,
-                  tooltip: _isDisplayingFirstMonth
-                      ? null
-                      : _localizations.previousMonthTooltip,
-                  onPressed:
-                      _isDisplayingFirstMonth ? null : _handlePreviousMonth,
-                  highlightColor: color,
-                  splashColor: color,
-                  hoverColor: color,
-                  constraints: const BoxConstraints(
-                    maxWidth: size,
-                    minWidth: size,
-                    maxHeight: size,
-                    minHeight: size,
+                if (widget.config.lastMonthIcon != null)
+                  IconButton(
+                    icon: widget.config.lastMonthIcon ??
+                        const Icon(Icons.chevron_left),
+                    color: controlColor,
+                    tooltip: _isDisplayingFirstMonth
+                        ? null
+                        : _localizations.previousMonthTooltip,
+                    onPressed:
+                        _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                    highlightColor: color,
+                    splashColor: color,
+                    hoverColor: color,
+                    constraints: const BoxConstraints(
+                      maxWidth: size,
+                      minWidth: size,
+                      maxHeight: size,
+                      minHeight: size,
+                    ),
+                    padding: EdgeInsets.zero,
+                    style: const ButtonStyle(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                   ),
-                  padding: EdgeInsets.zero,
-                  style: const ButtonStyle(
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                ),
                 Expanded(
                   child: Text(
                     widget.config.modePickerTextHandler
@@ -358,28 +359,29 @@ class _CalendarViewState extends State<_CalendarView> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                IconButton(
-                  icon: widget.config.nextMonthIcon ??
-                      const Icon(Icons.chevron_right),
-                  color: controlColor,
-                  tooltip: _isDisplayingLastMonth
-                      ? null
-                      : _localizations.nextMonthTooltip,
-                  onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
-                  highlightColor: color,
-                  splashColor: color,
-                  hoverColor: color,
-                  constraints: const BoxConstraints(
-                    maxWidth: size,
-                    minWidth: size,
-                    maxHeight: size,
-                    minHeight: size,
+                if (widget.config.nextMonthIcon != null)
+                  IconButton(
+                    icon: widget.config.nextMonthIcon ??
+                        const Icon(Icons.chevron_right),
+                    color: controlColor,
+                    tooltip: _isDisplayingLastMonth
+                        ? null
+                        : _localizations.nextMonthTooltip,
+                    onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                    highlightColor: color,
+                    splashColor: color,
+                    hoverColor: color,
+                    constraints: const BoxConstraints(
+                      maxWidth: size,
+                      minWidth: size,
+                      maxHeight: size,
+                      minHeight: size,
+                    ),
+                    padding: EdgeInsets.zero,
+                    style: const ButtonStyle(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                   ),
-                  padding: EdgeInsets.zero,
-                  style: const ButtonStyle(
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                ),
               ],
             ),
           ),
